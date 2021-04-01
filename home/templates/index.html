@@ -1,20 +1,23 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
+{% extends 'homebase.html' %}  <!-- homebase.html bağlı olarak çalışacağım.. -->
+
+{% block title %} Index sayfası Baslik {% endblock %}
+{% block keywords %} Index Sayfası anahtar kelimeler {% endblock %}
+{% block description %} Index Sayfası açıklamalar {% endblock %}
 
 
-<h2 style="color:green;">
 
-    {{ text | safe }}
+{% block sidebar%}
+    {% include 'sidebar.html' %}
+{% endblock %}
 
-    <a href="{% url 'index' %}">Tıklanınca index.html git</a>
 
-</h2>
 
-</body>
-</html>
+{% block slider %}
+    {% include 'slider.html' %}
+{% endblock %}
+
+
+{% block body %}
+    {% include 'content.html' %}
+{% endblock %}
