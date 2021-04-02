@@ -1,12 +1,15 @@
 from django.shortcuts import render
 
-
-
+from home.models import MySetting
 
 
 def index(request):
 
-    text = "My text ... <br>Ugur hmz <strong>Burası BOSTON/MA</strong>"
-    context = {'text':text}
+    setting = MySetting.objects.get()
+    text='wqeq'
+    context = {
+        'setting':setting,
+        'text':text
+    }
 
-    return render(request,"index.html", context=context)
+    return render(request,"index.html", context)
