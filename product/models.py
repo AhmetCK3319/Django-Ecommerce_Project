@@ -1,9 +1,10 @@
 from django.db import models
-
+from django.utils.safestring import mark_safe
 
 
 
 #_________________________________ Category(models.Model)_________________________________________
+
 class Category(models.Model):
 
     STATUS = (
@@ -24,6 +25,15 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    # Admin panelde Image gösterimi
+    def my_image_tag(self):
+
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" height="50"/>')
+        else:
+            return ""
+
+    my_image_tag.short_description = 'Image'
 
 #_________________________________ Product(models.Model)_________________________________________
 
@@ -50,6 +60,16 @@ class Product(models.Model):
         return self.title
 
 
+    #Admin panelde Image gösterimi
+    def image_tag(self):
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" height="50"/>')
+        else:
+            return ""
+
+    image_tag.short_description = 'Image'
+
+
 #_________________________________ Images(models.Model)_________________________________________
 
 class Images(models.Model):
@@ -62,6 +82,15 @@ class Images(models.Model):
     def __str__(self):
         return self.title
 
+    # Admin panelde Image gösterimi
+    def my_image_tag(self):
+
+        if self.image:
+            return mark_safe(f'<img src="{self.image.url}" height="50"/>')
+        else:
+            return ""
+
+    my_image_tag.short_description = 'Image'
 
 
 
