@@ -10,7 +10,7 @@ class Category(models.Model):
         ('True','Evet'),
         ('False','Hayır'),
     )
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=100)
     keywords = models.CharField(max_length=255)
     description = models.CharField(max_length=200)
     image = models.ImageField(blank=True,upload_to='images/')
@@ -50,13 +50,17 @@ class Product(models.Model):
         return self.title
 
 
+#_________________________________ Images(models.Model)_________________________________________
+
+class Images(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    image = models.ImageField(blank=True, upload_to='images/')
 
 
 
-
-
-
-
+    def __str__(self):
+        return self.title
 
 
 
