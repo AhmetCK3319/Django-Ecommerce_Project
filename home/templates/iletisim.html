@@ -1,0 +1,53 @@
+
+{% extends 'homebase.html' %}  <!-- homebase.html bağlı olarak çalışacağım.. -->
+{% load static %}
+
+{% block title %} İletişim - {{ setting.company }}{% endblock title %}
+{% block keywords %} {{ setting.keywords }}{% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+
+
+
+{% block head %}
+<link rel='shortcut icon' type='image/x-icon' href='{{ setting.icon.url }}' />
+
+{% endblock %}
+
+{% block sidebar%}
+
+    {% include 'sidebar.html' %}
+{% endblock %}
+
+
+
+
+{% block body %}
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="#">Anasayfa</a></li>
+				<li class="active">İletişim</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+               {{ setting.contact|safe }}
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+
+
+{% endblock %}
