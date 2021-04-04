@@ -26,7 +26,7 @@
 	<div id="breadcrumb">
 		<div class="container">
 			<ul class="breadcrumb">
-				<li><a href="/">Anasayfa</a></li>
+				<li><a href="{% url 'index' %}">Anasayfa</a></li>
 				<li class="active">Ürünlerimiz</li>
 			</ul>
 		</div>
@@ -229,7 +229,7 @@
 											<span>New</span>
 											<span class="sale">-20%</span>
 										</div>
-										<a href="/product/{{ rs.id }}/{{ rs.slug }}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+										<a href="{% url 'category_products' rs.id rs.slug %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
 										<img src="{{ rs.image.url }}" alt="">
 									</div>
 									<div class="product-body">
@@ -241,7 +241,7 @@
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star-o empty"></i>
 										</div>
-										<h2 class="product-name"><a href="/product/{{ rs.id }}/{{ rs.slug }}">{{ rs.title }}</a></h2>
+										<h2 class="product-name"><a href="{% url 'category_products' rs.id  rs.slug  %}">{{ rs.title }}</a></h2>
 										<div class="product-btns">
 											<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
 											<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
