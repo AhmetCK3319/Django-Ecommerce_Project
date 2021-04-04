@@ -3,10 +3,13 @@ from django.template.defaultfilters import slugify
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.fields import  RichTextUploadingField
 
+from mptt.models import MPTTModel, TreeForeignKey
 
 #_________________________________ Category(models.Model)_________________________________________
 
-class Category(models.Model):
+
+
+class Category(MPTTModel):
 
     STATUS = (
         ('True','Evet'),
@@ -18,13 +21,27 @@ class Category(models.Model):
     image = models.ImageField(blank=True,upload_to='images/')
     status = models.CharField(max_length=10, choices=STATUS)
     slug = models.SlugField()
-    parent = models.ForeignKey('self',blank=True,null=True, related_name='children',on_delete=models.CASCADE)
+    parent = TreeForeignKey('self',blank=True,null=True, related_name='children',on_delete=models.CASCADE)
     create_at = models.DateTimeField(auto_now_add =True)
     update_at = models.DateField(auto_now=True)
 
 
+    class MPTTMeta:
+        order_insertion_by = ['title']
+
+
+
+
+
+    #iç içe Kategori Gösterimi
     def __str__(self):
-        return self.title
+        full_path = [self.title]
+        k = self.parent
+        while k is not None:
+            full_path.append(k.title)
+            k = k.parent
+
+        return ' -> '.join(full_path[::-1])
 
     # Admin panelde Image gösterimi
     def my_image_tag(self):
@@ -52,7 +69,7 @@ class Product(models.Model):
     price = models.FloatField()
     amount = models.IntegerField()
     detail =RichTextUploadingField()
-    slug = models.SlugField(editable=False)
+    slug = models.SlugField(max_length=130,unique =True,editable=False)
     status = models.CharField(max_length = 10,choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateField(auto_now=True)
@@ -61,9 +78,8 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(Product, self).save(*args, **kwargs)
+
+
 
 
     #Admin panelde Image gösterimi
@@ -74,6 +90,29 @@ class Product(models.Model):
             return ""
 
     image_tag.short_description = 'Image'
+
+
+
+    #slug'da ı'ları i yapma
+    def get_unique_slug(self):
+        slug = slugify(self.title.replace('ı', 'i'))
+        unique_slug = slug
+        counter = 1
+        while Product.objects.filter(slug=unique_slug).exists():
+            unique_slug = "{}-{}".format(slug, counter)
+            counter += 1
+        return unique_slug
+
+
+    #slug'ı kaydetme
+    def save(self, *args, **kwargs):
+        self.slug = self.get_unique_slug()
+
+        return super(Product, self).save(*args, **kwargs)
+
+
+
+
 
 
 #_________________________________ Images(models.Model)_________________________________________
