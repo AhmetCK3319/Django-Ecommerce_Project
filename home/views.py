@@ -1,27 +1,28 @@
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import FormView
-
 from home.models import MySetting, ContactFormMessage, ContactFormu
-from product.models import Product
+from product.models import Product, Category
 
 
+#__________________________________ index() _______________________________________
 def index(request):
 
     setting = MySetting.objects.get()
     sliderdata = Product.objects.all()[:4] #Tüm Product'ları getirme, bana 4 tanesini getir.
+    category = Category.objects.all()
 
     context = {
         'setting':setting,
         'page':'home',
         'sliderdata':sliderdata,
+        'category':category,
     }
 
-    return render(request,"index.html", context)
+    return render(request,"index.html", context=context)
 
+
+#__________________________________ hakkimizda() _______________________________________
 def hakkimizda(request):
     setting = MySetting.objects.get()
     context = {
@@ -31,7 +32,7 @@ def hakkimizda(request):
 
     return render(request,"hakkimizda.html", context)
 
-
+#__________________________________ referanslar() _______________________________________
 def referanslar(request):
     setting = MySetting.objects.get()
     context = {
@@ -42,6 +43,7 @@ def referanslar(request):
     return render(request,"referanslar.html", context)
 
 
+#__________________________________ iletisim() _______________________________________
 def iletisim(request):
 
     if request.method=='POST':
