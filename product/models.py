@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.fields import  RichTextUploadingField
 
@@ -51,6 +52,7 @@ class Product(models.Model):
     price = models.FloatField()
     amount = models.IntegerField()
     detail =RichTextUploadingField()
+    slug = models.SlugField(editable=False)
     status = models.CharField(max_length = 10,choices=STATUS)
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateField(auto_now=True)
@@ -58,6 +60,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Product, self).save(*args, **kwargs)
 
 
     #Admin panelde Image gösterimi

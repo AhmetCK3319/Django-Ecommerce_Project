@@ -20,7 +20,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-        list_display = ['title','category','price','amount','image_tag','status']
+        list_display = ['title','category','price','amount','image_tag','status','slug']
         list_filter = ['status','create_at','category']
         search_fields = ['title','category','price','keywords']
         inlines = [ProductImageInline]

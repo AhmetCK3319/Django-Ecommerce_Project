@@ -6,15 +6,18 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView
 
 from home.models import MySetting, ContactFormMessage, ContactFormu
+from product.models import Product
 
 
 def index(request):
 
     setting = MySetting.objects.get()
+    sliderdata = Product.objects.all()[:4] #Tüm Product'ları getirme, bana 4 tanesini getir.
 
     context = {
         'setting':setting,
         'page':'home',
+        'sliderdata':sliderdata,
     }
 
     return render(request,"index.html", context)
