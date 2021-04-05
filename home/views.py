@@ -11,12 +11,22 @@ def index(request):
     setting = MySetting.objects.get()
     sliderdata = Product.objects.all()[:4] #Tüm Product'ları getirme, bana 4 tanesini getir.
     category = Category.objects.all()
+    dayproducts = Product.objects.all()[:12] # Günün ürünleri
+    lastproducts = Product.objects.all().order_by("-id")[:4] # Son ürünler
+    randomproducts = Product.objects.all().order_by("?")[:4] # Rastgele ürünler
+
+
+
 
     context = {
         'setting':setting,
         'page':'home',
         'sliderdata':sliderdata,
         'category':category,
+        'dayproducts':dayproducts,
+        'lastproducts':lastproducts,
+        'randomproducts':randomproducts,
+
     }
 
     return render(request,"index.html", context=context)
