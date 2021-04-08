@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from home.models import MySetting, ContactFormMessage, ContactFormu
-from product.models import Product, Category
+from product.models import Product, Category, Images
 
 
 #__________________________________ index() _______________________________________
@@ -97,9 +97,11 @@ def category_products(request,id,slug):
 def product_detail(request,id,slug):
     category = Category.objects.all()
     product = Product.objects.get(pk=id)
+    images = Images.objects.filter(product_id=id)
     context = {
         'product':product,
         'category':category,
+        'images':images,
     }
 
     return render(request,"product_detail.html",context=context)
