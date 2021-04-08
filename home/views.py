@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from home.models import MySetting, ContactFormMessage, ContactFormu
 from product.models import Product, Category
@@ -92,3 +92,15 @@ def category_products(request,id,slug):
         }
 
         return render(request,"products.html",context=context)
+
+
+def product_detail(request,id,slug):
+    category = Category.objects.all()
+    product = Product.objects.get(pk=id)
+    context = {
+        'product':product,
+        'category':category,
+    }
+
+    return render(request,"product_detail.html",context=context)
+

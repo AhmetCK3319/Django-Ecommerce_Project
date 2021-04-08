@@ -227,9 +227,9 @@
 									<div class="product-thumb">
 										<div class="product-label">
 											<span>New</span>
-											<span class="sale">-20%</span>
+											<span class="sale"></span>
 										</div>
-										<a href="{% url 'category_products' rs.id rs.slug %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
+										<a href="{% url 'product_detail' rs.id rs.slug %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</a>
 										<img src="{{ rs.image.url }}" alt="">
 									</div>
 									<div class="product-body">
