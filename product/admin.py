@@ -1,15 +1,18 @@
 from django.contrib import admin
 from mptt.admin import  DraggableMPTTAdmin
-from product.models import Category,Product,Images
+from product.models import Category, Product, Images, Comment
 
 
+
+
+#_____________________________ CategoryAdmin_______________________________
 class ProductImageInline(admin.TabularInline):
         model = Images
         extra = 5
 
 
 
-
+#_____________________________ CategoryAdmin_______________________________
 class CategoryAdmin(admin.ModelAdmin):
         search_fields = ['title', 'description', 'keywords']
         readonly_fields = ('my_image_tag',)
@@ -17,7 +20,7 @@ class CategoryAdmin(admin.ModelAdmin):
         list_filter=['status','create_at']
 
 
-
+#_____________________________ ProductAdmin_______________________________
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
         list_display = ['title','category','price','amount','image_tag','status','slug']
@@ -27,6 +30,8 @@ class ProductAdmin(admin.ModelAdmin):
         readonly_fields = ('image_tag',)
 
 
+
+#_____________________________ ImagesAdmin________________________________
 @admin.register(Images)
 class ImagesAdmin(admin.ModelAdmin):
         list_display=['title','my_image_tag','product']
@@ -35,6 +40,7 @@ class ImagesAdmin(admin.ModelAdmin):
         search_fields = ['title','product']
 
 
+#_____________________________ CategoryAdmin2________________________________
 class CategoryAdmin2(DraggableMPTTAdmin):
     mptt_indent_field = "title"
     list_display = ('tree_actions', 'indented_title',
@@ -70,3 +76,21 @@ class CategoryAdmin2(DraggableMPTTAdmin):
 
 
 admin.site.register(Category,CategoryAdmin2)
+
+#_____________________________ CommentAdmin________________________________
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['subject','comment','product','user','status']
+    list_filter = ['status']
+
+
+
+
+
+
+
+
+
+
+
+

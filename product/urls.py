@@ -8,6 +8,7 @@ from . import views
 
 urlpatterns = [
 
-    path('',views.index, name='product')
+    path('',views.index, name='product'),
+    path('addcomment/<int:id>',views.addcomment,name='addcomment')
 
 ]
