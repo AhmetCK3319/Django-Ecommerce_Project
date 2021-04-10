@@ -1,0 +1,83 @@
+
+{% extends 'homebase.html' %}  <!-- homebase.html bağlı olarak çalışacağım.. -->
+{% load static %}
+
+{% block title %} Product Search {% endblock title %}
+{% block keywords %} {{ category.keywords }}{% endblock %}
+{% block description %} {{ category.description }} {% endblock %}
+
+
+
+{% block head %}
+<link rel='shortcut icon' type='image/x-icon' href='{{ setting.icon.url }}' />
+
+{% endblock %}
+
+{% block sidebar%}
+
+    {% include 'sidebar.html' %}
+{% endblock %}
+
+
+
+
+{% block body %}
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="{% url 'index' %}">Anasayfa</a></li>
+
+
+
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+             	<table cellpadding="3" width="1200">
+
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+
+                            </tr>
+
+                        {% for rs in products %}
+                            <tr>
+                                <td class="thumb"><a href="{% url 'product_detail' rs.id rs.slug %}">
+                                    <img src="{{ rs.image.url }}" alt="" style="height: 100px">
+                                </a></td>
+
+                                <td> <a href="{% url 'product_detail' rs.id rs.slug %}" class="product-name">{{ rs.title }}</a>	</td>
+                                <td> <a href="{% url 'category_products' rs.category.id  rs.category.slug %}">{{ rs.category }}</a></td>
+
+                                <td><h4>{{ rs.price }}</h4></td>
+
+
+
+                            </tr>
+                            {% endfor %}
+
+
+
+							</table>
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+
+
+{% endblock %}

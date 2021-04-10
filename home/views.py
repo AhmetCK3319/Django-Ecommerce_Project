@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+
+from home.forms import SearchForm
 from home.models import MySetting, ContactFormMessage, ContactFormu
 from product.models import Product, Category, Images, Comment
 
@@ -80,7 +82,7 @@ def iletisim(request):
 
     return render(request,"iletisim.html", context=context)
 
-
+#__________________________________ category_products() _______________________________________
 def category_products(request,id,slug):
         category = Category.objects.all()
         category_data =Category.objects.get(pk=id)
@@ -93,7 +95,7 @@ def category_products(request,id,slug):
 
         return render(request,"products.html",context=context)
 
-
+#__________________________________ product_detail() _______________________________________
 def product_detail(request,id,slug):
     category = Category.objects.all()
     product = Product.objects.get(pk=id)
@@ -108,4 +110,39 @@ def product_detail(request,id,slug):
     }
 
     return render(request,"product_detail.html",context=context)
+
+
+#__________________________________ product_search() _______________________________________
+
+def product_search(request):
+    if request.method=='POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            category = Category.objects.all()
+            query = form.cleaned_data['query']#html içindeki name="query" kısmı
+            products = Product.objects.filter(title__icontains=query)
+
+            context = {
+                'products':products,
+                'category':category,
+            }
+
+            return render(request,"products_search.html",context=context)
+
+
+        return HttpResponseRedirect('/')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
